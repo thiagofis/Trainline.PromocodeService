@@ -220,14 +220,14 @@ namespace Trainline.PromocodeService.Host.UnitTests
 
             _campaignRepository.Setup(x => x.Get(voucher.CampaignId)).ReturnsAsync(() =>null);
 
-            _campaignRepository.Setup(x => x.Add(new Campaign {CampaignId = voucher.CampaignId})).ReturnsAsync(campaignEntity);
+            _campaignRepository.Setup(x => x.Add(new CampaignEntity {CampaignId = voucher.CampaignId})).ReturnsAsync(campaignEntity);
 
             _voucherifyClient.Setup(x => x.GetVoucher(Code))
                 .ReturnsAsync(voucher);
 
             var promocode = await _promocodeService.Create(Code);
 
-            _campaignRepository.Verify(x => x.Add(It.Is<Campaign>(c => c.CampaignId.Equals(voucher.CampaignId))), Times.Once);
+            _campaignRepository.Verify(x => x.Add(It.Is<CampaignEntity>(c => c.CampaignId.Equals(voucher.CampaignId))), Times.Once);
 
         }
 
@@ -579,9 +579,9 @@ namespace Trainline.PromocodeService.Host.UnitTests
             return promocodeEntity;
         }
 
-        private Service.Repository.Entities.Campaign CreateCampaignEntity(string campaignId = null, int? id = null)
+        private Service.Repository.Entities.CampaignEntity CreateCampaignEntity(string campaignId = null, int? id = null)
         {
-            var campaignEntity = new Service.Repository.Entities.Campaign
+            var campaignEntity = new Service.Repository.Entities.CampaignEntity
             {
                 Id = 1,
                 CampaignId = CampaignId,

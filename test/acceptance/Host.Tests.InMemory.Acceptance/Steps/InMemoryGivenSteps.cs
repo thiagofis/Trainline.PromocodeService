@@ -469,9 +469,9 @@ namespace Trainline.PromocodeService.Host.Tests.InMemory.Acceptance.Steps
             _inMemoryVoucherifyClient.AddInvalidProductRedemptionFromInvoices(voucherCode, invoices);
         }
 
-        public async Task<Campaign> AnInvalidValidCampaign(string campaignId)
+        public async Task<CampaignEntity> AnInvalidValidCampaign(string campaignId)
         {
-            var campaign = new Campaign{CampaignId = campaignId, Redeemable = false};
+            var campaign = new CampaignEntity{CampaignId = campaignId, Redeemable = false};
             await _inMemoryCampaignRepository.Add(campaign);
 
             return campaign;
