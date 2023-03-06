@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "d79af364-7bd8-4820-a726-7a404a5d83e5",
+		"name": "Voucherify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get voucher",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"value": "{{AppId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-App-Token",
+						"value": "{{AppToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.voucherify.io/v1/vouchers/{{VoacherCode}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"vouchers",
+						"{{VoacherCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate voucher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"type": "text",
+						"value": "{{AppId}}"
+					},
+					{
+						"key": "X-App-Token",
+						"type": "text",
+						"value": "{{AppToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customer\": {\n\t\t\"source_id\": \"4f251e5c-b535-46f6-a7eb-14039e00f5e0\",\n\t\t\"name\": \"Fake Customer\"\n\t},\n\t\"order\": {\n\t\t\"amount\": 200000,\n\t\t\"source_id\": \"18f3c681-9f2c-43ec-9e54-7136cf913413\",\n        \"metadata\": {\n            \"CurrencyCode\": \"GBP\"\n        },\n\t\t\"items\": [\n\t\t\t{\n\t\t\t\t\"product_id\": \"product_id_1_valid\",\n\t\t\t\t\"quantity\": \"1\",\n\t\t\t\t\"price\": 2500,\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"override\": false,\n\t\t\t\t\t\"metadata\": {\n\t\t\t\t\t\t\"Vendor\": \"ATOC\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"product_id\": \"product_id_2_invalid\",\n\t\t\t\t\"quantity\": \"1\",\n\t\t\t\t\"price\": 2500,\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"override\": false,\n\t\t\t\t\t\"metadata\": {\n\t\t\t\t\t\t\"Vendor\": \"ATOC\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+				},
+				"url": {
+					"raw": "https://api.voucherify.io/v1/vouchers/{{VoacherCode}}/validate",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"vouchers",
+						"{{VoacherCode}}",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Redeem voucher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"type": "text",
+						"value": "{{AppId}}"
+					},
+					{
+						"key": "X-App-Token",
+						"type": "text",
+						"value": "{{AppToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customer\": {\n\t\t\"source_id\": \"hash_cu_id\",\n\t\t\"name\": \"Joe Doe\"\n\t},\n\t\"order\":{\n\t\t\"amount\": 53500,\n\t\t\"source_id\": \"tl_order_id\",\n\t\t\"items\": \n\t\t[\n\t\t\t{\n\t\t\t\t\"product_id\": \"tpv3_product\", \n\t\t\t\t\"quantity\": \"1\", \n\t\t\t\t\"price\": 535000,\n\t\t\t\t\"product\":{\n\t\t\t\t\t\"override\": false,\n\t\t\t\t\t\"metadata\": {\n\t\t\t\t\t\t\"Vendor\": \"ATOC\",\n\t\t\t\t\t\t\"Origin\": \"Paris Gare du Nord\",\n\t\t\t\t\t\t\"Destination\": \"Marseille\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+				},
+				"url": {
+					"raw": "https://api.voucherify.io/v1/vouchers/{{VoacherCode}}/redemption",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"vouchers",
+						"{{VoacherCode}}",
+						"redemption"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get voucher Redemption",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"value": "{{AppId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-App-Token",
+						"value": "{{AppToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.voucherify.io/v1/vouchers/{{VoacherCode}}/redemptions",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"vouchers",
+						"{{VoacherCode}}",
+						"redemptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reinstate voucher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"type": "text",
+						"value": "{{AppId}}"
+					},
+					{
+						"key": "X-App-Token",
+						"type": "text",
+						"value": "{{AppToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.voucherify.io/v1/redemptions/r_RIgaUu92a0sp4LuOaeRL1Lh9/rollback",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"redemptions",
+						"r_RIgaUu92a0sp4LuOaeRL1Lh9",
+						"rollback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Validation Rule",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-App-Id",
+						"value": "{{AppId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-App-Token",
+						"value": "{{AppToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.voucherify.io/v1/validation-rules/val_9vQGXMohszf7",
+					"protocol": "https",
+					"host": [
+						"api",
+						"voucherify",
+						"io"
+					],
+					"path": [
+						"v1",
+						"validation-rules",
+						"val_9vQGXMohszf7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

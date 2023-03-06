@@ -1,0 +1,30 @@
+version: 2
+
+pipeline: 'dotnet-microservice'
+
+build:
+    compile:
+        runner: dotnet
+        target: Trainline.PromocodeService.sln
+    test:
+        runner: dotnet
+        assemblies:
+        - test/unit/**/*.UnitTests.csproj
+        - test/acceptance/**/*.InMemory.Acceptance.csproj
+
+scan:
+  checkmarx:
+    path: src
+
+package:
+    type: zip
+    packageDefinition:
+      name: 'PromocodeService'
+      artifacts:
+           .: 'src/Host/bin/Release/netcoreapp3.1/*/publish/.'
+
+acceptance:
+    test:
+        runner: dotnet
+        assemblies:
+            - test/acceptance/Host.Tests.EndToEnd.Acceptance/*.csproj

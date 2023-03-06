@@ -1,0 +1,37 @@
+{
+  "id": "test_with_two",
+  "name": "Test with two",
+  "rules": {
+    "1": {
+      "name": "customer.segment",
+      "conditions": {
+        "$is": [
+          "seg_f1r5Ts3gM3N7"
+        ]
+      },
+      "rules": {}
+    },
+    "2": {
+      "name": "product.id",
+      "conditions": {
+        "$is": [
+          {
+            "id": "prod_f1r5Tpr0DuC7",
+            "object": "product",
+            "source_id": "test_prod_id_1"
+          }
+        ]
+      },
+      "rules": {}
+    },
+    "logic": "(1) and (2)"
+  },
+  "created_at": "2020-10-05T19:13:22Z",
+  "updated_at": "2020-10-05T19:34:34Z",
+  "applicable_to": {
+    "excluded": [],
+    "included": []
+  },
+  "type": "advanced",
+  "object": "validation_rules"
+}

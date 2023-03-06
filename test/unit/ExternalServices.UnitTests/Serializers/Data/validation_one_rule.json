@@ -1,0 +1,24 @@
+{
+  "id": "test_with_one",
+  "name": "Test with one",
+  "rules": {
+    "1": {
+      "name": "customer.segment",
+      "conditions": {
+        "$is": [
+          "seg_f1r5Ts3gM3N7"
+        ]
+      },
+      "rules": {}
+    },
+    "logic": "1"
+  },
+  "created_at": "2020-10-05T19:13:22Z",
+  "updated_at": null,
+  "applicable_to": {
+    "excluded": [],
+    "included": []
+  },
+  "type": "advanced",
+  "object": "validation_rules"
+}

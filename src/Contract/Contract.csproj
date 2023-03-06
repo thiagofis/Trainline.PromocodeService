@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Trainline.PromocodeService.Contract</AssemblyName>
+    <RootNamespace>Trainline.PromocodeService.Contract</RootNamespace>
+  </PropertyGroup>
+
+</Project>

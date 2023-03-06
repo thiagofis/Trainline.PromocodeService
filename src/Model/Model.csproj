@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Trainline.PromocodeService.Model</RootNamespace>
+    <AssemblyName>Trainline.PromocodeService.Model</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExternalServices\ExternalServices.csproj" />
+  </ItemGroup>
+
+</Project>

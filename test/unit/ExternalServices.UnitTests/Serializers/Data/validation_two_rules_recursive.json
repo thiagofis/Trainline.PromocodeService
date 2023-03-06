@@ -1,0 +1,64 @@
+{
+  "id": "test_with_two_recursive",
+  "name": "Test with two recursive",
+  "rules": {
+    "1": {
+      "name": "product.metadata",
+      "property": "Vendor",
+      "conditions": {
+        "$is": [
+          "ATOC"
+        ]
+      },
+      "rules": {
+        "1": {
+          "name": "product.metadata.aggregated_amount",
+          "conditions": {
+            "$more_than_or_equal": [
+              10000
+            ]
+          },
+          "rules": {},
+          "error": {
+            "message": "OrderMinimumSpend_100"
+          }
+        },
+        "2": {
+          "name": "product.metadata.discount_applicable",
+          "conditions": {
+            "$is": [
+              true
+            ]
+          },
+          "rules": {}
+        },
+        "logic": "1 and 2"
+      },
+      "error": {
+        "message": "VendorNotMatching_ATOC"
+      }
+    },
+    "2": {
+      "name": "order.metadata",
+      "property": "CurrencyCode",
+      "conditions": {
+        "$is": [
+          "GBP"
+        ]
+      },
+      "rules": {},
+      "error": {
+        "message": "CurrencyCodeNotMatching_GBP"
+      }
+    },
+    "logic": "1 and 2"
+  },
+  "created_at": "2020-09-01T13:34:07Z",
+  "updated_at": "2020-09-16T15:42:29Z",
+  "applicable_to": {
+    "excluded": [],
+    "included": []
+  },
+  "type": "advanced",
+  "object": "validation_rules"
+}

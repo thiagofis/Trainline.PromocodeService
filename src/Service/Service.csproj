@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Trainline.PromocodeService.Service</RootNamespace>
+    <AssemblyName>Trainline.PromocodeService.Service</AssemblyName>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.3" />
+    <PackageReference Include="Trainline.NetCore.Exceptions" Version="3.3.0" />
+    <PackageReference Include="Trainline.NetCore.StandardHeaders" Version="1.13.1" />
+    <PackageReference Include="Trainline.NetStandard.Exceptions" Version="1.4.3" />
+    <PackageReference Include="Trainline.Product.SupportedProtocols" Version="0.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contract\Contract.csproj" />
+    <ProjectReference Include="..\ExternalServices\ExternalServices.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+</Project>

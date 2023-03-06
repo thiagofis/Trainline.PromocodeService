@@ -1,0 +1,2022 @@
+{
+	"info": {
+		"_postman_id": "6470e133-f1de-48fd-9508-7723e3f205db",
+		"name": "PromocodeService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PromocodeFlow",
+			"item": [
+				{
+					"name": "0. 1. Dummy Promocode",
+					"item": [
+						{
+							"name": "Dummy Create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"{{VoacherCode}}\",\r\n    \"validityStartDate\": \"2020-08-27T00:00:00Z\",\r\n    \"validityEndDate\": \"2020-12-31T00:00:00Z\",\r\n    \"canBeApplied\": false,\r\n    \"redeemedQuantity\": 1,\r\n    \"redemptionQuantity\": 10,\r\n    \"discount\": {\r\n        \"type\": \"AMOUNT\",\r\n        \"amount\": 10\r\n    },\r\n    \"ApplicableToProductIds\": [\r\n        \"123\",\r\n        \"456\",\r\n        \"789\"\r\n    ],\r\n    \"validationVendor\": \"ATOC\",\r\n    \"validationCurrencyCode\": \"GBP\",\r\n    \"validationMinimumSpend\": \"1.0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DummyUri}}/promocodes",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Apply",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n      \"id\": \"E4028BAAF150B2785B91ABF64F332A6E\",\r\n      \"productItems\": [\r\n        {\r\n          \"productId\": \"123\",\r\n          \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/123\",\r\n          \"vendor\": \"ATOC\",\r\n          \"amount\": 1000.0\r\n        },        \r\n        {\r\n          \"productId\": \"456\",\r\n          \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/456\",\r\n          \"vendor\": \"ATOC\",\r\n          \"amount\": 1000.0\r\n        },        \r\n        {\r\n          \"productId\": \"789\",\r\n          \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/890\",\r\n          \"vendor\": \"ATOC\",\r\n          \"amount\": 1000.0\r\n        }\r\n      ],\r\n      \"currencyCode\": \"GBP\"\r\n    }\r\n  ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/apply",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Redeem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"RedemptionId\", jsonData.redemptionId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n      \"id\": \"E4028BAAF150B2785B91ABF64F332A6E\",\r\n      \"productItems\": [\r\n        {\r\n          \"productId\": \"123\",\r\n          \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/c18c4bf6-7daa-4b68-b7f9-cb12175a7c89\",\r\n          \"vendor\": \"ATOC\",\r\n          \"amount\": 1000.10\r\n        }\r\n      ],\r\n      \"currencyCode\": \"GBP\"\r\n    }\r\n  ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/redeem",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"redeem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Get Redemption",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/redemptions/{{RedemptionId}}",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"redemptions",
+										"{{RedemptionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Get All Redemption",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/redemptions",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"redemptions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Reinstate ",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/redemptions/{{RedemptionId}}/reinstate",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"redemptions",
+										"{{RedemptionId}}",
+										"reinstate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dummy Link",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"OriginalProductUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/123\",\r\n    \"OriginalProductAmount\": {\r\n        \"Amount\": 10.0,\r\n        \"CurrencyCode\": \"GBP\"\r\n    },\r\n     \"ReplacementProducts\": [\r\n         {\r\n            \"ProductUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/linkedABC\",\r\n            \"Amount\": {\r\n                \"Amount\": 100.0,\r\n                \"CurrencyCode\": \"GBP\"\r\n            }\r\n         }\r\n     ]\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DummyUri}}/promocodes/{{VoacherCode}}/redemptions/{{RedemptionId}}/ledger/link",
+									"host": [
+										"{{DummyUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{VoacherCode}}",
+										"redemptions",
+										"{{RedemptionId}}",
+										"ledger",
+										"link"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "0. 1. Promocode",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoUri\", jsonData.links.self.href);\r",
+											"\r",
+											"var promoBasketItem = '{ \"Id\": \"3\", Type\": \"promo\", \"Uri\": \"' + jsonData.links.self.href + '\" }';\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoBasketItem\", promoBasketItem);\r",
+											"postman.setEnvironmentVariable(\"promocodeId\", jsonData.promocodeId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"code\": \"{{VoacherCode}}\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Apply",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n      \"id\": \"E4028BAAF150B2785B91ABF64F332A6E\",\r\n      \"productItems\": [\r\n            {\r\n                \"productId\": \"123\",\r\n                \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/123\",\r\n                \"vendor\": \"ATOC\",\r\n                \"amount\": 100.10\r\n            },\r\n            {\r\n                \"productId\": \"456\",\r\n                \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/456\",\r\n                \"vendor\": \"ATOC\",\r\n                \"amount\": 100.10\r\n            }\r\n      ],\r\n      \"currencyCode\": \"GBP\"\r\n    }\r\n  ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/apply",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"apply"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Redeem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"RedemptionId\", jsonData.redemptionId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"id\": \"E4028BAAF150B2785B91ABF64F332A6E\",\r\n        \"productItems\": [\r\n            {\r\n                \"productId\": \"123\",\r\n                \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/123\",\r\n                \"vendor\": \"ATOC\",\r\n                \"amount\": 100.10\r\n            },\r\n            {\r\n                \"productId\": \"456\",\r\n                \"productUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/456\",\r\n                \"vendor\": \"ATOC\",\r\n                \"amount\": 100.10\r\n            }\r\n        ],\r\n        \"currencyCode\": \"GBP\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redeem",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redeem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Redemption",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"LedgerUri\", jsonData.links.ledger.href);\r",
+											"postman.setEnvironmentVariable(\"PromoUri\", jsonData.links.self.href);\r",
+											"\r",
+											"var promoBasketItem = '{ \"Id\": \"3\", Type\": \"promo\", \"Uri\": \"' + jsonData.links.self.href + '\" }';\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoBasketItem\", promoBasketItem);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redemptions/{{RedemptionId}}",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redemptions",
+										"{{RedemptionId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all Redemptions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoUri\", jsonData.links.self.href);\r",
+											"\r",
+											"var promoBasketItem = '{ \"Id\": \"3\", Type\": \"promo\", \"Uri\": \"' + jsonData.links.self.href + '\" }';\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoBasketItem\", promoBasketItem);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redemptions",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redemptions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reinstate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoUri\", jsonData.links.self.href);\r",
+											"\r",
+											"var promoBasketItem = '{ \"Id\": \"3\", Type\": \"promo\", \"Uri\": \"' + jsonData.links.self.href + '\" }';\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"PromoBasketItem\", promoBasketItem);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redemptions/{{RedemptionId}}/reinstate",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redemptions",
+										"{{RedemptionId}}",
+										"reinstate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Quote",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " [\r\n        {\r\n            \"ReferenceId\": \"ef6302c09ba847908fd854566c7de1d3\",\r\n            \"ProductUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/123\",\r\n            \"RefundableAmount\": {\r\n                \"Amount\": 100.0,\r\n                \"CurrencyCode\": \"GBP\"\r\n            },\r\n            \"ListedAmount\": {\r\n                \"Amount\": 100.0,\r\n                \"CurrencyCode\": \"GBP\"\r\n            }\r\n        }\r\n    ]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redemptions/{{RedemptionId}}/ledger/quotes",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redemptions",
+										"{{RedemptionId}}",
+										"ledger",
+										"quotes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Forfeit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LinkUri}}",
+									"host": [
+										"{{LinkUri}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ledger",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "ConversationId",
+										"type": "text",
+										"value": "mt"
+									},
+									{
+										"key": "ContextUri",
+										"type": "text",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211"
+									},
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LedgerUri}}",
+									"host": [
+										"{{LedgerUri}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Link",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"RevertLinkUri\", jsonData.links.revert.href);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"OriginalProductUri\": \"https://c99-dummyinventory.service.ttlnonprod.local/products/456\",\r\n     \"TargetProducts\": \r\n     [ \r\n         {\r\n            \"ProductUri\": \"https://c99-eu-travelprotocolapi.service.ttlnonprod.local/products/new456\",\r\n            \"ProductAmount\": \r\n            {\r\n                \"Amount\": 25.0,\r\n                \"CurrencyCode\":\"GBP\"\r\n            }\r\n        }\r\n     ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUri}}/promocodes/{{promocodeId}}/redemptions/{{RedemptionId}}/ledger/link",
+									"host": [
+										"{{BaseUri}}"
+									],
+									"path": [
+										"promocodes",
+										"{{promocodeId}}",
+										"redemptions",
+										"{{RedemptionId}}",
+										"ledger",
+										"link"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RevertLink",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "mt",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://c99-context.service.ttlnonprod.local/contexts/be5a772a-58d4-475f-aba8-77b705277211",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{RevertLinkUri}}",
+									"host": [
+										"{{RevertLinkUri}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "8. refund",
+					"item": [
+						{
+							"name": "1 Get Refund Eligibility",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"postman.clearEnvironmentVariable(\"refundableId0\");",
+											"postman.clearEnvironmentVariable(\"deliveryFeeId\");",
+											"postman.clearEnvironmentVariable(\"bookingFeeId\");",
+											"postman.clearEnvironmentVariable(\"paymentFeeId\");",
+											"",
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"// postman.setEnvironmentVariable(\"refundableId0\", jsonData.refundables[0].id);",
+											"",
+											"",
+											"for(var i=0; i < jsonData.refundables.length; i++){",
+											"    if(jsonData.refundables[i].type == \"product-refundable\"){",
+											"        postman.setEnvironmentVariable(\"refundableId\"+i, jsonData.refundables[i].id);",
+											"    }else if(jsonData.refundables[i].type == \"delivery-fee\"){",
+											"        postman.setEnvironmentVariable(\"deliveryFeeId\", jsonData.refundables[i].id);",
+											"    }else if(jsonData.refundables[i].type == \"booking-fee\"){",
+											"        postman.setEnvironmentVariable(\"bookingFeeId\", jsonData.refundables[i].id);",
+											"    }else if(jsonData.refundables[i].type == \"payment-fee\"){",
+											"        postman.setEnvironmentVariable(\"paymentFeeId\", jsonData.refundables[i].id);",
+											"    }",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "conversationid",
+										"value": "dietcode-refund-test"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refund-eligibility.v2+json"
+									}
+								],
+								"url": {
+									"raw": "https://{{ecomEnv}}-refundoffer.service.ttlnonprod.local/orders/{{orderId}}/refund-eligibility",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-refundoffer",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"orders",
+										"{{orderId}}",
+										"refund-eligibility"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2 Create Refund Quote (Ts&Cs)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"",
+											"postman.clearEnvironmentVariable(\"quoteUri\");",
+											"postman.setEnvironmentVariable(\"quoteUri\", postman.getResponseHeader(\"Location\"));",
+											"",
+											"",
+											"postman.clearEnvironmentVariable(\"quoteId\");",
+											"postman.setEnvironmentVariable(\"quoteId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "conversationid",
+										"value": "dietcode-refund-test"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refund-quote.v1+json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.trainline.refund-quote.v1+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"policy\": \"terms-and-conditions\",\r\n  \"refundables\": [\r\n    {\r\n      \"id\": \"{{refundableId0}}\"\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-refundquote.service.ttlnonprod.local/orders/{{orderId}}/refund-quotes",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-refundquote",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"orders",
+										"{{orderId}}",
+										"refund-quotes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2.1 Get Refund Quote",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "conversationid",
+										"value": "dietcode-refund-test"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refund-quote.v1+json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.trainline.refund-quote.v1+json"
+									}
+								],
+								"url": {
+									"raw": "https://{{ecomEnv}}-refundquote.service.ttlnonprod.local/refund-quotes/{{quoteId}}",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-refundquote",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"refund-quotes",
+										"{{quoteId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3 Create Refund",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"postman.clearEnvironmentVariable(\"refundUri\");",
+											"",
+											"postman.setEnvironmentVariable(\"refundUri\", postman.getResponseHeader(\"Location\"));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "dietcode-refund-test"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.trainline.refund.v2+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refund.v2+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-refund.service.ttlnonprod.local/refund-quotes/{{quoteId}}/confirm",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-refund",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"refund-quotes",
+										"{{quoteId}}",
+										"confirm"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3.1 Get Refund",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "conversationid",
+										"value": "dietcode-refund-test"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refund.v2+json"
+									}
+								],
+								"url": {
+									"raw": "{{refundUri}}",
+									"host": [
+										"{{refundUri}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Dummy Inventory",
+					"item": [
+						{
+							"name": "1 Create Dummy Product ATOC (Retail Protocol)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"AtocProductUri\", jsonData.data.links.self.href);",
+											"postman.setEnvironmentVariable(\"AtocProductId\", jsonData.data.id);",
+											"",
+											"tests[\"AtocProductUri: \" + jsonData.data.links.self.href] = jsonData.data.links.self.href;",
+											"tests[\"AtocProductId: \" + jsonData.data.id] = jsonData.data.id;",
+											"",
+											"var atocBasketItem = '{ \"Id\": \"1\", Type\": \"product\", \"Uri\": \"' + jsonData.data.links.self.href + '\" }';",
+											"",
+											"postman.setEnvironmentVariable(\"AtocBasketItem\", atocBasketItem);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.retailprotocol.v2+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"data\": {\r\n\t\t\"attributes\": {\r\n\t\t\t\"expiresAt\": null,\r\n\t\t\t\"state\": null,\r\n\t\t\t\"vendorName\": \"ATOC\",\r\n\t\t\t\"listPrice\": {\r\n\t\t\t\t\"amount\": 32.20,\r\n\t\t\t\t\"currencyCode\": \"GBP\",\r\n\t\t\t\t\"breakdown\": []\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"meta\": {\r\n\t\t\"shouldFailIssueCommand\": false\r\n\t}\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products",
+									"protocol": "http",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1 Create Dummy Product ATOC (Travel Protocol)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.travelprotocol.v3+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"State\": null,\r\n\t\"CreatedAt\": \"0001-01-01T00:00:00+00:00\",\r\n\t\"ListPrice\": {\r\n\t\t\"Amount\": 32.20,\r\n\t\t\"CurrencyCode\": \"GBP\"\r\n\t},\r\n\t\"FullListPrice\": null,\r\n\t\"Commercials\": {\r\n\t\t\"Name\": \"ATOC\",\r\n\t\t\"Id\": null,\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"vendorInformation\"\r\n\t},\r\n\t\"OutwardJourneyPlan\": {\r\n\t\t\"Origin\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Destination\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Legs\": [{\r\n\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\"LocalArriveAt\": \"2018-09-11T16:54:00.2957891+01:00\",\r\n\t\t\t\t\"LocalDepartAt\": \"2018-09-11T15:54:00.2957891+01:00\",\r\n\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\"Route\": null,\r\n\t\t\t\t\"Id\": \"22b0b736-7d96-40a2-a849-22d50b5def78\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Id\": \"1bbe6324-1b70-44e6-95fe-67daeb76e65d\",\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"journeyPlan\"\r\n\t},\r\n\t\"InwardJourneyPlan\": {\r\n\t\t\"Origin\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Destination\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Legs\": [{\r\n\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\"LocalArriveAt\": \"2018-09-12T16:54:00.2957891+01:00\",\r\n\t\t\t\t\"LocalDepartAt\": \"2018-09-12T15:54:00.2957891+01:00\",\r\n\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\"Route\": null,\r\n\t\t\t\t\"Id\": \"e03c191e-239f-47df-b0fa-125fc6daa7a1\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Id\": \"d37b3143-be7b-44b4-b318-4e5c4780f2eb\",\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"journeyPlan\"\r\n\t},\r\n\t\"Fares\": [{\r\n\t\t\t\"Price\": {\r\n\t\t\t\t\"Amount\": 20.0,\r\n\t\t\t\t\"CurrencyCode\": \"GBP\"\r\n\t\t\t},\r\n\t\t\t\"ValidUntil\": null,\r\n\t\t\t\"Commercials\": null,\r\n\t\t\t\"FareType\": {\r\n\t\t\t\t\"Code\": null,\r\n\t\t\t\t\"Name\": \"Test\",\r\n\t\t\t\t\"Description\": null,\r\n\t\t\t\t\"FareTypeName\": \"Test\",\r\n\t\t\t\t\"Conditions\": null,\r\n\t\t\t\t\"x-conditionsSummary\": null,\r\n\t\t\t\t\"x-conditions\": null,\r\n\t\t\t\t\"Refundable\": null,\r\n\t\t\t\t\"Exchangeable\": null,\r\n\t\t\t\t\"ConditionDetails\": null,\r\n\t\t\t\t\"ValidityPeriods\": null,\r\n\t\t\t\t\"Id\": \"104f58bb-6f2d-43ae-94c5-fe91bea9b3f1\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"fare\"\r\n\t\t\t},\r\n\t\t\t\"RouteRestriction\": {\r\n\t\t\t\t\"Description\": \"Test\",\r\n\t\t\t\t\"Id\": null,\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"routeRestriction\"\r\n\t\t\t},\r\n\t\t\t\"FareLegs\": [{\r\n\t\t\t\t\t\"Leg\": {\r\n\t\t\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\t\t\"LocalArriveAt\": \"2018-09-11T16:54:00.2957891+01:00\",\r\n\t\t\t\t\t\t\"LocalDepartAt\": \"2018-09-11T15:54:00.2957891+01:00\",\r\n\t\t\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\t\t\"Route\": null,\r\n\t\t\t\t\t\t\"Id\": \"22b0b736-7d96-40a2-a849-22d50b5def78\",\r\n\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"Comfort\": null,\r\n\t\t\t\t\t\"TravelClass\": null,\r\n\t\t\t\t\t\"Reservation\": null,\r\n\t\t\t\t\t\"BoardBeforeGuaranteed\": null,\r\n\t\t\t\t\t\"Id\": \"03a48f59-8c91-4db9-86e6-d820bd706eaf\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"fareLeg\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"FarePassengers\": [{\r\n\t\t\t\t\t\"Passengers\": [{\r\n\t\t\t\t\t\t\t\"Gender\": null,\r\n\t\t\t\t\t\t\t\"LastName\": null,\r\n\t\t\t\t\t\t\t\"FirstName\": null,\r\n\t\t\t\t\t\t\t\"Name\": null,\r\n\t\t\t\t\t\t\t\"DateOfBirth\": null,\r\n\t\t\t\t\t\t\t\"Passenger\": null,\r\n\t\t\t\t\t\t\t\"PassengerType\": {\r\n\t\t\t\t\t\t\t\t\"Name\": \"Test\",\r\n\t\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\t\"Group\": null,\r\n\t\t\t\t\t\t\t\t\"AgeRestriction\": null,\r\n\t\t\t\t\t\t\t\t\"Id\": null,\r\n\t\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\t\"Type\": \"passengerType\"\r\n\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\"Id\": \"693c50ad-afd6-45b8-84a5-d2d3a742cbbd\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"typedFarePassenger\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t],\r\n\t\t\t\t\t\"Fare\": null,\r\n\t\t\t\t\t\"Deliverable\": null,\r\n\t\t\t\t\t\"Id\": \"afd76eeb-efc8-4b08-8701-1afbd6035557\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"farePassenger\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"Cards\": null,\r\n\t\t\t\"TravelClass\": null,\r\n\t\t\t\"Id\": \"4042dde7-94bd-4c2c-9bda-8e3e94d9a843\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"fare\"\r\n\t\t}\r\n\t],\r\n\t\"Deliveries\": [{\r\n\t\t\t\"Collection\": null,\r\n\t\t\t\"DeliveryMethod\": {\r\n\t\t\t\t\"Method\": \"Test\",\r\n\t\t\t\t\"Id\": \"TestDelivery\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"deliveryMethod\"\r\n\t\t\t},\r\n\t\t\t\"Recipients\": null,\r\n\t\t\t\"Deliverables\": [{\r\n\t\t\t\t\t\"Collection\": {\r\n\t\t\t\t\t\t\"Reference\": \"TESTCOLLECTIONREF\",\r\n\t\t\t\t\t\t\"Conditions\": null\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"TicketIds\": null,\r\n\t\t\t\t\t\"Documents\": [],\r\n\t\t\t\t\t\"Id\": \"3e3e56e6-2cdd-4d4d-9d4a-3cdcad6d64a5\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"deliverable\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"State\": null,\r\n\t\t\t\"Id\": \"3874bd0e-4fe5-41da-a8b9-5776fbf9f5cd\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"delivery\"\r\n\t\t}\r\n\t],\r\n\t\"LeadPassenger\": null,\r\n\t\"InventoryReferences\": null,\r\n\t\"TravellingGroups\": null,\r\n\t\"Id\": \"{{AtocProductId}}\",\r\n\t\"Meta\": null,\r\n\t\"Links\": null,\r\n\t\"Type\": \"product\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2 Create Dummy Product SNCF (Retail Protocol)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"SncfProductUri\", jsonData.data.links.self.href);",
+											"postman.setEnvironmentVariable(\"SncfProductId\", jsonData.data.id);",
+											"",
+											"tests[\"DummyProductUri: \" + jsonData.data.links.self.href] = jsonData.data.links.self.href;",
+											"tests[\"DummyProductId: \" + jsonData.data.id] = jsonData.data.id;",
+											"",
+											"var sncfBasketItem = '{ \"Id\": \"2\", Type\": \"product\", \"Uri\": \"' + jsonData.data.links.self.href + '\" }';",
+											"",
+											"postman.setEnvironmentVariable(\"SncfBasketItem\", sncfBasketItem);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.retailprotocol.v2+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"data\": {\r\n\t\t\"attributes\": {\r\n\t\t\t\"expiresAt\": null,\r\n\t\t\t\"state\": null,\r\n\t\t\t\"vendorName\": \"SNCF\",\r\n\t\t\t\"listPrice\": {\r\n\t\t\t\t\"amount\": 100.00,\r\n\t\t\t\t\"currencyCode\": \"GBP\",\r\n\t\t\t\t\"breakdown\": []\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t\"meta\": {\r\n\t\t\"shouldFailIssueCommand\": false\r\n\t}\r\n}\r\n"
+								},
+								"url": {
+									"raw": "http://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products",
+									"protocol": "http",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2 Create Dummy Product SNCF (Travel Protocol)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 201;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.travelprotocol.v3+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"State\": null,\r\n\t\"CreatedAt\": \"0001-01-01T00:00:00+00:00\",\r\n\t\"ListPrice\": {\r\n\t\t\"Amount\": 100.0,\r\n\t\t\"CurrencyCode\": \"GBP\"\r\n\t},\r\n\t\"FullListPrice\": null,\r\n\t\"Commercials\": {\r\n\t\t\"Name\": \"ATOC\",\r\n\t\t\"Id\": null,\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"vendorInformation\"\r\n\t},\r\n\t\"OutwardJourneyPlan\": {\r\n\t\t\"Origin\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Destination\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Legs\": [{\r\n\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\"LocalArriveAt\": \"2018-09-11T16:54:00.2957891+01:00\",\r\n\t\t\t\t\"LocalDepartAt\": \"2018-09-11T15:54:00.2957891+01:00\",\r\n\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\"Route\": null,\r\n\t\t\t\t\"Id\": \"22b0b736-7d96-40a2-a849-22d50b5def78\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Id\": \"1bbe6324-1b70-44e6-95fe-67daeb76e65d\",\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"journeyPlan\"\r\n\t},\r\n\t\"InwardJourneyPlan\": {\r\n\t\t\"Origin\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Destination\": {\r\n\t\t\t\"Code\": null,\r\n\t\t\t\"LocationType\": null,\r\n\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\"Aliases\": null,\r\n\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\"Longitude\": null,\r\n\t\t\t\"Latitude\": null,\r\n\t\t\t\"Timezone\": null,\r\n\t\t\t\"Propreties\": null,\r\n\t\t\t\"Parents\": null,\r\n\t\t\t\"Tag\": null,\r\n\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"location\"\r\n\t\t},\r\n\t\t\"Legs\": [{\r\n\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\"LocalArriveAt\": \"2018-09-12T16:54:00.2957891+01:00\",\r\n\t\t\t\t\"LocalDepartAt\": \"2018-09-12T15:54:00.2957891+01:00\",\r\n\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t},\r\n\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\"Route\": null,\r\n\t\t\t\t\"Id\": \"e03c191e-239f-47df-b0fa-125fc6daa7a1\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Id\": \"d37b3143-be7b-44b4-b318-4e5c4780f2eb\",\r\n\t\t\"Meta\": null,\r\n\t\t\"Links\": null,\r\n\t\t\"Type\": \"journeyPlan\"\r\n\t},\r\n\t\"Fares\": [{\r\n\t\t\t\"Price\": {\r\n\t\t\t\t\"Amount\": 20.0,\r\n\t\t\t\t\"CurrencyCode\": \"GBP\"\r\n\t\t\t},\r\n\t\t\t\"ValidUntil\": null,\r\n\t\t\t\"Commercials\": null,\r\n\t\t\t\"FareType\": {\r\n\t\t\t\t\"Code\": null,\r\n\t\t\t\t\"Name\": \"Test\",\r\n\t\t\t\t\"Description\": null,\r\n\t\t\t\t\"FareTypeName\": \"Test\",\r\n\t\t\t\t\"Conditions\": null,\r\n\t\t\t\t\"x-conditionsSummary\": null,\r\n\t\t\t\t\"x-conditions\": null,\r\n\t\t\t\t\"Refundable\": null,\r\n\t\t\t\t\"Exchangeable\": null,\r\n\t\t\t\t\"ConditionDetails\": null,\r\n\t\t\t\t\"ValidityPeriods\": null,\r\n\t\t\t\t\"Id\": \"104f58bb-6f2d-43ae-94c5-fe91bea9b3f1\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"fare\"\r\n\t\t\t},\r\n\t\t\t\"RouteRestriction\": {\r\n\t\t\t\t\"Description\": \"Test\",\r\n\t\t\t\t\"Id\": null,\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"routeRestriction\"\r\n\t\t\t},\r\n\t\t\t\"FareLegs\": [{\r\n\t\t\t\t\t\"Leg\": {\r\n\t\t\t\t\t\t\"TimetableId\": null,\r\n\t\t\t\t\t\t\"LocalArriveAt\": \"2018-09-11T16:54:00.2957891+01:00\",\r\n\t\t\t\t\t\t\"LocalDepartAt\": \"2018-09-11T15:54:00.2957891+01:00\",\r\n\t\t\t\t\t\t\"TransportMode\": null,\r\n\t\t\t\t\t\t\"TransportDesignation\": null,\r\n\t\t\t\t\t\t\"Origin\": {\r\n\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\t\t\"Name\": \"Euston\",\r\n\t\t\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\t\t\"ShortName\": \"EUS\",\r\n\t\t\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\t\t\"Id\": \"EUS\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\"Destination\": {\r\n\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\t\t\t\"Name\": \"Manchester\",\r\n\t\t\t\t\t\t\t\"Aliases\": null,\r\n\t\t\t\t\t\t\t\"ShortName\": \"MAN\",\r\n\t\t\t\t\t\t\t\"Longitude\": null,\r\n\t\t\t\t\t\t\t\"Latitude\": null,\r\n\t\t\t\t\t\t\t\"Timezone\": null,\r\n\t\t\t\t\t\t\t\"Propreties\": null,\r\n\t\t\t\t\t\t\t\"Parents\": null,\r\n\t\t\t\t\t\t\t\"Tag\": null,\r\n\t\t\t\t\t\t\t\"Id\": \"MAN\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"location\"\r\n\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\"Carrier\": null,\r\n\t\t\t\t\t\t\"TransportModeEntity\": null,\r\n\t\t\t\t\t\t\"FinalDestinationDisplayName\": null,\r\n\t\t\t\t\t\t\"Route\": null,\r\n\t\t\t\t\t\t\"Id\": \"22b0b736-7d96-40a2-a849-22d50b5def78\",\r\n\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\"Type\": \"leg\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"Comfort\": null,\r\n\t\t\t\t\t\"TravelClass\": null,\r\n\t\t\t\t\t\"Reservation\": null,\r\n\t\t\t\t\t\"BoardBeforeGuaranteed\": null,\r\n\t\t\t\t\t\"Id\": \"03a48f59-8c91-4db9-86e6-d820bd706eaf\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"fareLeg\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"FarePassengers\": [{\r\n\t\t\t\t\t\"Passengers\": [{\r\n\t\t\t\t\t\t\t\"Gender\": null,\r\n\t\t\t\t\t\t\t\"LastName\": null,\r\n\t\t\t\t\t\t\t\"FirstName\": null,\r\n\t\t\t\t\t\t\t\"Name\": null,\r\n\t\t\t\t\t\t\t\"DateOfBirth\": null,\r\n\t\t\t\t\t\t\t\"Passenger\": null,\r\n\t\t\t\t\t\t\t\"PassengerType\": {\r\n\t\t\t\t\t\t\t\t\"Name\": \"Test\",\r\n\t\t\t\t\t\t\t\t\"Code\": null,\r\n\t\t\t\t\t\t\t\t\"Group\": null,\r\n\t\t\t\t\t\t\t\t\"AgeRestriction\": null,\r\n\t\t\t\t\t\t\t\t\"Id\": null,\r\n\t\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\t\"Type\": \"passengerType\"\r\n\t\t\t\t\t\t\t},\r\n\t\t\t\t\t\t\t\"Id\": \"693c50ad-afd6-45b8-84a5-d2d3a742cbbd\",\r\n\t\t\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\t\t\"Type\": \"typedFarePassenger\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t],\r\n\t\t\t\t\t\"Fare\": null,\r\n\t\t\t\t\t\"Deliverable\": null,\r\n\t\t\t\t\t\"Id\": \"afd76eeb-efc8-4b08-8701-1afbd6035557\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"farePassenger\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"Cards\": null,\r\n\t\t\t\"TravelClass\": null,\r\n\t\t\t\"Id\": \"4042dde7-94bd-4c2c-9bda-8e3e94d9a843\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"fare\"\r\n\t\t}\r\n\t],\r\n\t\"Deliveries\": [{\r\n\t\t\t\"Collection\": null,\r\n\t\t\t\"DeliveryMethod\": {\r\n\t\t\t\t\"Method\": \"Test\",\r\n\t\t\t\t\"Id\": \"TestDelivery\",\r\n\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\"Links\": null,\r\n\t\t\t\t\"Type\": \"deliveryMethod\"\r\n\t\t\t},\r\n\t\t\t\"Recipients\": null,\r\n\t\t\t\"Deliverables\": [{\r\n\t\t\t\t\t\"Collection\": {\r\n\t\t\t\t\t\t\"Reference\": \"TESTCOLLECTIONREF\",\r\n\t\t\t\t\t\t\"Conditions\": null\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"TicketIds\": null,\r\n\t\t\t\t\t\"Documents\": [],\r\n\t\t\t\t\t\"Id\": \"3e3e56e6-2cdd-4d4d-9d4a-3cdcad6d64a5\",\r\n\t\t\t\t\t\"Meta\": null,\r\n\t\t\t\t\t\"Links\": null,\r\n\t\t\t\t\t\"Type\": \"deliverable\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n\t\t\t\"State\": null,\r\n\t\t\t\"Id\": \"3874bd0e-4fe5-41da-a8b9-5776fbf9f5cd\",\r\n\t\t\t\"Meta\": null,\r\n\t\t\t\"Links\": null,\r\n\t\t\t\"Type\": \"delivery\"\r\n\t\t}\r\n\t],\r\n\t\"LeadPassenger\": null,\r\n\t\"InventoryReferences\": null,\r\n\t\"TravellingGroups\": null,\r\n\t\"Id\": \"{{DummyProductId}}\",\r\n\t\"Meta\": null,\r\n\t\"Links\": null,\r\n\t\"Type\": \"product\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setting dummy to return eligibility",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refundsprotocol.v1+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Type\":\"product\",\r\n   \"Id\":\"{{AtocProductId}}\",\r\n   \"Voidables\":[\r\n      {\r\n         \"Id\":\"voidable-1\",\r\n         \"Type\":\"voidable\",\r\n         \"Policies\":[\r\n            {\r\n               \"Policy\":\"terms-and-conditions\",\r\n               \"IsVoidable\":true,\r\n               \"Reason\":null,\r\n               \"ExpiryTimestampUtc\":\"2021-08-29T16:17:45.4515768+01:00\"\r\n            }\r\n         ],\r\n         \"Links\":{\r\n            \"self\":{\r\n               \"Method\":null,\r\n               \"Href\":\"http://voidable1\",\r\n               \"Meta\":null\r\n            }\r\n         }\r\n      },\r\n      {\r\n         \"Id\":\"voidable-2\",\r\n         \"Type\":\"voidable\",\r\n         \"Policies\":[\r\n            {\r\n               \"Policy\":\"terms-and-conditions\",\r\n               \"IsVoidable\":true,\r\n               \"Reason\":null,\r\n               \"ExpiryTimestampUtc\":\"2021-08-29T16:17:45.4515768+01:00\"\r\n            }\r\n         ],\r\n         \"Links\":{\r\n            \"self\":{\r\n               \"Method\":null,\r\n               \"Href\":\"http://voidable2\",\r\n               \"Meta\":null\r\n            }\r\n         }\r\n      }\r\n   ],\r\n   \"Links\":{\r\n      \"self\":{\r\n         \"Method\":null,\r\n         \"Href\":\"https://c99-dummyinventory.service.ttlnonprod.local/products/{{AtocProductId}}\",\r\n         \"Meta\":null\r\n      }\r\n   }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products/{{AtocProductId}}/voidables?synchronous=true",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products",
+										"{{AtocProductId}}",
+										"voidables"
+									],
+									"query": [
+										{
+											"key": "synchronous",
+											"value": "true"
+										}
+									]
+								},
+								"description": "curl --location --request POST '' \\\r\n--header 'ConversationId: Postman-4shndy5yjrn' \\\r\n--header 'ContextUri: https://c99-context.service.ttlnonprod.local/contexts/20812af7-797b-4b01-85f0-8f3b6101e03e' \\\r\n--header 'Accept: application/vnd.trainline.refundsprotocol.v1+json' \\\r\n--header 'Content-Type: application/json' \\\r\n--data-raw '{\r\n   \"Type\":\"product\",\r\n   \"Id\":\"e8ea6e1a-1b4b-412e-8ed0-cd1bf8c12c6e\",\r\n   \"Voidables\":[\r\n      {\r\n         \"Id\":\"voidable-1\",\r\n         \"Type\":\"voidable\",\r\n         \"Policies\":[\r\n            {\r\n               \"Policy\":\"technical-void\",\r\n               \"IsVoidable\":true,\r\n               \"Reason\":null,\r\n               \"ExpiryTimestampUtc\":\"2020-08-29T16:17:45.4515768+01:00\"\r\n            }\r\n         ],\r\n         \"Links\":{\r\n            \"self\":{\r\n               \"Method\":null,\r\n               \"Href\":\"http://voidable\",\r\n               \"Meta\":null\r\n            }\r\n         }\r\n      }\r\n   ],\r\n   \"Links\":{\r\n      \"self\":{\r\n         \"Method\":null,\r\n         \"Href\":\"https://c99-dummyinventory.service.ttlnonprod.local/products/e8ea6e1a-1b4b-412e-8ed0-cd1bf8c12c6e\",\r\n         \"Meta\":null\r\n      }\r\n   }\r\n}'"
+							},
+							"response": []
+						},
+						{
+							"name": "Add void-context",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.trainline.refundsprotocol.v1+json",
+										"type": "text"
+									},
+									{
+										"key": "ConversationId",
+										"value": "{{conversationId}}",
+										"type": "text"
+									},
+									{
+										"key": "ContextUri",
+										"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Type\": \"void-context\",\r\n    \"Id\": \"voidcontext-{{AtocProductId}}\",\r\n    \"ETag\": null,\r\n    \"TotalRefundableAmount\": {\r\n        \"Amount\": 32.20,\r\n        \"CurrencyCode\": \"GBP\"\r\n    },\r\n    \"Links\": {\r\n        \"self\": {\r\n            \"Method\": null,\r\n            \"Href\": \"http://nowhere/\",\r\n            \"Meta\": null\r\n        }\r\n    },\r\n    \"Voidables\": [\r\n        {\r\n            \"Type\": \"context-voidable\",\r\n            \"Id\": \"voidable-1\",\r\n            \"RefundableAmount\": {\r\n                \"amount\": 17.2,\r\n                \"currencyCode\": \"GBP\"\r\n            },\r\n            \"ListedAmount\": null,\r\n            // \"ListedAmount\": {\r\n            //     \"amount\": 17.2,\r\n            //     \"currencyCode\": \"GBP\"\r\n            // },\r\n            \"Status\": 0,\r\n            \"Reason\": null,\r\n            \"Links\": {\r\n                \"self\": {\r\n                    \"Method\": null,\r\n                    \"Href\": \"http://nowhere/\",\r\n                    \"Meta\": null\r\n                },\r\n                \"voidable\": {\r\n                    \"Method\": null,\r\n                    \"Href\": \"http://voidable1\",\r\n                    \"Meta\": null\r\n                }\r\n            }\r\n         },\r\n        // {\r\n        //     \"Type\": \"context-voidable\",\r\n        //     \"Id\": \"voidable-2\",\r\n        //     \"RefundableAmount\": {\r\n        //         \"amount\": 17.1,\r\n        //         \"currencyCode\": \"GBP\"\r\n        //     },\r\n        //     \"ListedAmount\": {\r\n        //         \"amount\": 17.1,\r\n        //         \"currencyCode\": \"GBP\"\r\n        //     },\r\n        //     \"Status\": 0,\r\n        //     \"Reason\": null,\r\n        //     \"Links\": {\r\n        //         \"self\": {\r\n        //             \"Method\": null,\r\n        //             \"Href\": \"http://nowhere/\",\r\n        //             \"Meta\": null\r\n        //         },\r\n        //         \"voidable\": {\r\n        //             \"Method\": null,\r\n        //             \"Href\": \"http://voidable2\",\r\n        //             \"Meta\": null\r\n        //         }\r\n        //     }\r\n        // }\r\n    ],\r\n    \"Status\": 0,\r\n    \"AdminFees\": [],\r\n    \"InventoryFee\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ecomEnv}}-dummyinventory.service.ttlnonprod.local/products/{{AtocProductId}}/add-void-context",
+									"protocol": "https",
+									"host": [
+										"{{ecomEnv}}-dummyinventory",
+										"service",
+										"ttlnonprod",
+										"local"
+									],
+									"path": [
+										"products",
+										"{{AtocProductId}}",
+										"add-void-context"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "0 create context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"contextId\", jsonData.id);",
+									"",
+									"tests['context id: ' + jsonData.id] = true;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"Values\": {\n   \"Application:EntryPointId\": [\n     \"1003\"\n   ],\n   \"Application:ManagedGroupId\": [\n     \"20\"\n   ],\n   \"Application:ManageGroupId\": [\n     \"20\"\n   ],\n   \"Application:User:IpAddress\":[\"127.0.0.1\"]\n }\n}"
+						},
+						"url": {
+							"raw": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-context",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"contexts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 Create Basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"basketId\", jsonData.basket.id);",
+									"",
+									"tests['basket id: ' + jsonData.basket.id] = true;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							},
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ContextUri\":\"https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}\",\r\n  \"Items\": [\r\n     {\r\n       \"Id\": \"1\",\r\n       \"Type\": \"product\",\r\n       \"Uri\": \"{{AtocProductUri}}\"\r\n     },\r\n    //  {\r\n    //    \"Id\": \"2\",\r\n    //    \"Type\": \"product\",\r\n    //    \"Uri\": \"https://c22-dummyinventory.service.ttlnonprod.local/products/c6b28612-5101-437a-b647-784e7a5ebf2d\"\r\n    //  },\r\n    {\r\n      \"Id\": \"3\",\r\n      \"Type\": \"promo\",\r\n      \"Uri\": \"{{PromoUri}}\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{ecomEnv}}-basket.service.ttlnonprod.local/baskets/",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-basket",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"baskets",
+								""
+							]
+						},
+						"description": "exercise system through ecomm platform"
+					},
+					"response": []
+				},
+				{
+					"name": "4.1 Create payment details (Card)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Id is there\"] = jsonData.id !==null;",
+									"postman.setEnvironmentVariable(\"paymentDetailsId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "TestUser",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "TestPassword",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Version",
+								"value": "2"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic VGVzdFVzZXI6VGVzdFBhc3N3b3Jk"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailAddress\": \"{{recipientEmailAddress}}\",\r\n  \"cardDetails\": {\r\n    \"cardHolderName\": \"Jane Doe\",\r\n    \"cardNumber\": \"4000000000001000\",\r\n    \"cardType\": \"VisaCredit\",\r\n    \"cardSecurityCode\": \"123\",\r\n    \"expiryMonth\": 12,\r\n    \"expiryYear\": 21\r\n  },\r\n  \"isSpeedyCheckout\": false,\r\n  \"entryParameter\": {\r\n    \"affiliateCode\": \"string\",\r\n    \"corporateId\": 0,\r\n    \"entryPointId\": 111,\r\n    \"managedGroupId\": 20\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://{{paymentsEnv}}-payments.service.ttlnonprod.local/card/paymentdetails?CurrencyCode={{Currency}}",
+							"protocol": "https",
+							"host": [
+								"{{paymentsEnv}}-payments",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"card",
+								"paymentdetails"
+							],
+							"query": [
+								{
+									"key": "CurrencyCode",
+									"value": "{{Currency}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.2 Price Basket",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							},
+							{
+								"key": "ContextUri",
+								"value": "https://c99-context.service.ttlnonprod.local/contexts/52e35e54-9afb-4dc6-af3d-74fdeba85533"
+							}
+						],
+						"url": {
+							"raw": "localhost:/pricing?CurrencyCode={{Currency}}",
+							"host": [
+								"localhost"
+							],
+							"port": "",
+							"path": [
+								"pricing"
+							],
+							"query": [
+								{
+									"key": "CurrencyCode",
+									"value": "{{Currency}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 Get payment offers (cards)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"for(var o=0;o<jsonData.offers.length;o++){",
+									"    if(jsonData.offers[o].paymentMethod === 'VisaDebit')    {",
+									"        postman.setEnvironmentVariable(\"paymentOfferId\", jsonData.offers[o].id);",
+									"        break;",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							},
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{ecomEnv}}-paymentoffer.service.ttlnonprod.local/baskets/{{basketId}}/pricing/payment-offers?CurrencyCode={{Currency}}",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-paymentoffer",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"baskets",
+								"{{basketId}}",
+								"pricing",
+								"payment-offers"
+							],
+							"query": [
+								{
+									"key": "CurrencyCode",
+									"value": "{{Currency}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 Create Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"customerId\", jsonData.CustomerId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"ContactId\":0,\r\n\t\"EmailAddress\":\"{{recipientEmailAddress}}\",\r\n\t\"EntryParameter\":{\r\n\t\t\"managedGroupId\":20\r\n\t}\r\n}"
+						},
+						"url": {
+							"raw": "https://{{atocEnv}}-customer.service.ttlnonprod.local/CustomerService/CustomerService.svc/json/RegisterImplicit",
+							"protocol": "https",
+							"host": [
+								"{{atocEnv}}-customer",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"CustomerService",
+								"CustomerService.svc",
+								"json",
+								"RegisterImplicit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7.1 Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"orderId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"BasketId\": \"{{basketId}}\",\n  \"CustomerUri\" : \"https://{{atocEnv}}-customer.service.ttlnonprod.local/CustomerService/CustomerService.svc/json/LoadCustomer?customerId={{customerId}}\",\n  \"PaymentOfferId\" : \"{{paymentOfferId}}\",\n  \"PaymentDetailsUri\": \"https://{{paymentsEnv}}-payments.service.ttlnonprod.local/card/paymentdetails/{{paymentDetailsId}}\",\n  \"PaymentDetails\" : {\n    \"Id\" : \"{{paymentDetailsId}}\"\n  },\"CurrencyCode\":\"{{Currency}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{ecomEnv}}-order.service.ttlnonprod.local/orders",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-order",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7.2 Confirm Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							},
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{ecomEnv}}-order.service.ttlnonprod.local/orders/{{orderId}}/confirm",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-order",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7.3 Get Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"var fulfilmentUri = jsonData.fulfilments[0].uri;",
+									"",
+									"postman.setEnvironmentVariable(\"FulfilmentUri\", fulfilmentUri);",
+									"",
+									"tests[\"FulfilmentUri: \" + fulfilmentUri] = fulfilmentUri;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							},
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{ecomEnv}}-order.service.ttlnonprod.local/orders/{{orderId}}",
+							"protocol": "https",
+							"host": [
+								"{{ecomEnv}}-order",
+								"service",
+								"ttlnonprod",
+								"local"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7.4 Get Fulfilment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "ContextUri",
+								"value": "https://{{ecomEnv}}-context.service.ttlnonprod.local/contexts/{{contextId}}"
+							},
+							{
+								"key": "ConversationId",
+								"value": "{{conversationId}}"
+							}
+						],
+						"url": {
+							"raw": "{{FulfilmentUri}}",
+							"host": [
+								"{{FulfilmentUri}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
