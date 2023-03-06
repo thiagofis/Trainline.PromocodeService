@@ -1,6 +1,6 @@
 ﻿namespace Trainline.PromocodeService.Service.Repository.Entities
 {
-    public class Campaign
+    public class CampaignEntity
     {
         public int Id { get; set; }
         public string CampaignId { get; set; }

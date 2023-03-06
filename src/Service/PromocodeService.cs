@@ -83,7 +83,7 @@ namespace Trainline.PromocodeService.Service
                 {
                     try
                     {
-                        await _campaignRepository.Add(new Campaign {CampaignId = voucher.CampaignId});
+                        await _campaignRepository.Add(new CampaignEntity {CampaignId = voucher.CampaignId});
                     }
                     catch (SqlException ex)
                     {
@@ -203,7 +203,7 @@ namespace Trainline.PromocodeService.Service
                 var campaign = await _campaignRepository.Get(voucher.CampaignId);
                 if (campaign == null)
                 {
-                   await _campaignRepository.Add(new Campaign { CampaignId = voucher.CampaignId });
+                   await _campaignRepository.Add(new CampaignEntity { CampaignId = voucher.CampaignId });
                 }
 
                 promocode.CampaignId = voucher.CampaignId;
