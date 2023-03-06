@@ -13,18 +13,18 @@ namespace Trainline.PromocodeService.Service.Repository
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<Campaign> Get(string campaignId)
+        public async Task<CampaignEntity> Get(string campaignId)
         {
             var sql = $"SELECT [Id], [CampaignId], [Redeemable] FROM dbo.Campaigns WHERE [CampaignId]=@CampaignId";
 
             using (var connection = await _connectionFactory.CreateOpenConnectionAsync())
             {
 
-                return await connection.QueryFirstOrDefaultAsync<Campaign>(sql, new { CampaignId = campaignId });
+                return await connection.QueryFirstOrDefaultAsync<CampaignEntity>(sql, new { CampaignId = campaignId });
             }
         }
 
-        public async Task<Campaign> Add(Campaign campaign)
+        public async Task<CampaignEntity> Add(CampaignEntity campaignEntity)
         {
             var sql = $"INSERT INTO dbo.Campaigns ([CampaignId], [Redeemable]) " +
                       "OUTPUT INSERTED.Id " +
@@ -32,13 +32,13 @@ namespace Trainline.PromocodeService.Service.Repository
 
             using (var connection = await _connectionFactory.CreateOpenConnectionAsync())
             {
-                connection.QuerySingle<Campaign>(sql, campaign);
+                connection.QuerySingle<CampaignEntity>(sql, campaignEntity);
             }
 
-            return campaign;
+            return campaignEntity;
         }
 
-        public async Task<Campaign> Update(Campaign campaign)
+        public async Task<CampaignEntity> Update(CampaignEntity campaignEntity)
         {
             var sql =
                 $"UPDATE dbo.Campaigns " +
@@ -46,10 +46,10 @@ namespace Trainline.PromocodeService.Service.Repository
                 $"WHERE [CampaignId]=@CampaignId";
             using (var connection = await _connectionFactory.CreateOpenConnectionAsync())
             {
-                await connection.ExecuteAsync(sql, campaign);
+                await connection.ExecuteAsync(sql, campaignEntity);
             }
 
-            return campaign;
+            return campaignEntity;
         }
     }
 }

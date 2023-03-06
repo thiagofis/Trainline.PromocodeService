@@ -5,10 +5,10 @@ namespace Trainline.PromocodeService.Service.Repository
 {
     public interface  ICampaignRepository
     {
-        Task<Campaign> Get(string campaignId);
+        Task<CampaignEntity> Get(string campaignId);
 
-        Task<Campaign> Add(Campaign campaign);
+        Task<CampaignEntity> Add(CampaignEntity campaignEntity);
 
-        Task<Campaign> Update(Campaign campaign);
+        Task<CampaignEntity> Update(CampaignEntity campaignEntity);
     }
 }
