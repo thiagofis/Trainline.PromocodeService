@@ -54,10 +54,10 @@ namespace Trainline.PromocodeService.Service
             }
 
             var campaign = await _campaignRepository.Get(promocode.CampaignName);
-            if (campaign.ExpirationDate < DateTime.UtcNow)
+            if (!campaign.Redeemable)
             {
-                _logger.LogError($"The promocode {promocode.Code} is invalid because the campaign {promocode.CampaignName} is expired.");
-                throw new CustomerIsNotEligibleForTheCampaignException("Campaign is expired.");
+                _logger.LogError($"The promocode {promocode.Code} is invalid because the campaign {promocode.CampaignName} is no longer active.");
+                throw new CustomerIsNotEligibleForTheCampaignException("Campaign is not active.");
             }
         }
     }
