@@ -23,7 +23,7 @@ namespace Trainline.PromocodeService.ExternalServices.Customer
 
         public async Task<CustomersFound> GetCustomerByEmail(SearchCriteria searchCriteria)
         {
-            var uri = new Uri($"{_settings.BaseUri}/CustomerService.svc/json/Search");
+            var uri = new Uri($"{_settings.AlfaBaseUri}/Customers/Search");
             _logger.LogInformation("Fetching customer by email. Uri={Uri} Payload={Payload}", uri, searchCriteria);
             var httpResult = await _httpRequestClient.PostAsync<SearchCriteria, CustomersFound>(uri, searchCriteria);
             return httpResult.Result;
