@@ -31,14 +31,12 @@ namespace Trainline.PromocodeService.ExternalServices.Customer
 
         public Task<CustomerRegistered> RegisterCustomerImplicitly(ImplicitRegistration implicitRegistration)
         {
-            throw new NotSupportedException("Alpha provider does not support implicit registration.");
+            throw new NotSupportedException("Alpha provider does not support this operation.");
         }
 
         public async Task<Contract.Customer> GetCustomer(Uri customerUri)
         {
-            _logger.LogInformation("Fetching customer by Uri. Uri={Uri}", customerUri);
-            var httpResult = await _httpRequestClient.GetAsync<Contract.Customer>(customerUri);
-            return httpResult.Result;
+            throw new NotSupportedException("Alpha provider does not support this operation.");
         }
     }
 }
